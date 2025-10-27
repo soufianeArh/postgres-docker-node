@@ -3,6 +3,8 @@ import cors from "cors"
 import dotenv from "dotenv"
 import bodyParser from "body-parser";
 import pool from "./config/db.js";
+import userRouter from "./routes/userRouter.js"
+import errorHandler from "./middleware/errorHandler.js"
 
 dotenv.config()
 
@@ -21,8 +23,11 @@ app.get("/", async (req,res)=>{
       res.send(`the db name is: ${result.rows[0].current_database} `)
 })
 
-console.log(typeof process.env.USERPASSWORD)
+//define routes 
+app.use("/api", userRouter)
 
+//error middleware
+app.use(errorHandler)
 //define PORT
 const port = process.env.PORT || 3001
 app.listen(port, ()=>{
