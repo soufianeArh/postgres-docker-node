@@ -5,7 +5,7 @@ export const getUsersService = async ()=>{
       return result.rows
 }
 
-export const getAllUsersService = async (id)=>{
+export const getUserByIdService = async (id)=>{
       const result = await Pool.query("SELECT user FROM users WHERE id = $1", [id])
       return result.rows[0]
 }
@@ -26,6 +26,6 @@ export const updateUserService = async (name, email, id)=>{
 }
 
 export const deleteUserService = async (id)=>{
-      const result = await Pool.query("DELETE user WHERE id=$1",[id]);
+      const result = await Pool.query("DELETE FROM user WHERE id=$1 RETURNING *",[id]);
       return result.rows
 }
